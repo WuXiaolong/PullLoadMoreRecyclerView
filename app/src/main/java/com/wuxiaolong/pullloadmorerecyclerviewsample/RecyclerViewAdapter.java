@@ -1,4 +1,4 @@
-package com.wuxiaolong.pullloadmorerecyclerview;
+package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
 import android.annotation.TargetApi;
 import android.content.Context;

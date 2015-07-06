@@ -35,19 +35,21 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.pull_loadmore_layout, null);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
+        View view = LayoutInflater.from(context).inflate(com.wuxiaolong.pullloadmorerecyclerview.R.layout.pull_loadmore_layout, null);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.swipeRefreshLayout);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefresh());
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.recycler_view);
         recyclerView.setVerticalScrollBarEnabled(true);
 
+        recyclerView.setHasFixedSize(true);
         linearLayoutManager = new LinearLayoutManager(context);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.addOnScrollListener(new RecyclerViewOnScroll());
 
-        mFooterView = (LinearLayout) view.findViewById(R.id.footer_linearlayout);
-        mFooterView.setVisibility(View.GONE);
-        this.addView(view);
+
         recyclerView.setOnTouchListener(
                 new View.OnTouchListener() {
                     @Override
@@ -62,11 +64,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         );
 
 
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefresh());
-        recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addOnScrollListener(new RecyclerViewOnScroll());
+        mFooterView = (LinearLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.footer_linearlayout);
+        mFooterView.setVisibility(View.GONE);
+        this.addView(view);
+
     }
 
     /**
@@ -128,13 +130,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         return linearLayoutManager.getOrientation();
     }
 
-    public void setVertical() {
-        linearLayoutManager.setOrientation(VERTICAL);
-    }
-
-    public void setHorizontal() {
-        linearLayoutManager.setOrientation(HORIZONTAL);
-    }
 
     public void setPullLoadMoreEnable(boolean enable) {
         this.hasMore = enable;
@@ -200,8 +195,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
-        if (adapter != null)
+        if (adapter != null) {
+
             recyclerView.setAdapter(adapter);
+        }
     }
 
 

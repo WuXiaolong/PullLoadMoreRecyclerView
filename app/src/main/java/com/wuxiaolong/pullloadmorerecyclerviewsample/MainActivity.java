@@ -1,10 +1,12 @@
-package com.wuxiaolong.pullloadmorerecyclerview;
+package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +21,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMoreRecyclerView);
-        mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
         setList();
+        mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
+
     }
 
     private void setList() {
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = start; i < 20 * mCount; i++) {
             dataList.add("测试数据" + i);
         }
-        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+
         if (mRecyclerViewAdapter == null) {
             mRecyclerViewAdapter = new RecyclerViewAdapter(this, dataList);
             mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             mRecyclerViewAdapter.getDataList().addAll(dataList);
             mRecyclerViewAdapter.notifyDataSetChanged();
         }
+        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
     }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
