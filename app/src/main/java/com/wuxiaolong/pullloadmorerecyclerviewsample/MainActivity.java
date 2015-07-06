@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMoreRecyclerView);
+//        mPullLoadMoreRecyclerView.setGridLayout(LinearLayoutManager.VERTICAL);
         setList();
         mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
 
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setList() {
         List<String> dataList = new ArrayList<>();
-        int start = 20 * (mCount - 1);
-        for (int i = start; i < 20 * mCount; i++) {
+        int start = 30 * (mCount - 1);
+        for (int i = start; i < 30 * mCount; i++) {
             dataList.add("测试数据" + i);
         }
 
