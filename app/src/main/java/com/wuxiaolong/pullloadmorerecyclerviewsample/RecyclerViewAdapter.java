@@ -47,8 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         holder.title.setText(dataList.get(position));
-        //手动更改高度，不同位置的高度有所不同
-        holder.title.setHeight(300 + (position % 3) * 30);
+//        holder.title.setHeight(200+new Random().nextInt(500));
     }
 
     @Override

@@ -49,24 +49,30 @@ public class MainActivity extends AppCompatActivity {
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    mRecyclerViewAdapter = null;
-                    mCount = 1;
-                    setList();
-                }
-            }, 3000);
+            new Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            setRefresh();
+                        }
+                    }, 3000);
         }
 
         @Override
         public void onLoadMore() {
-            new Handler().postDelayed(new Runnable() {
-                public void run() {
-                    mCount = mCount + 1;
-                    setList();
-                }
-            }, 3000);
+            new Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            mCount = mCount + 1;
+                            setList();
+                        }
+                    }, 3000);
         }
+    }
+
+    private void setRefresh() {
+        mRecyclerViewAdapter = null;
+        mCount = 1;
+        setList();
     }
 
     @Override
@@ -84,9 +90,21 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_linearlayout) {
+            mPullLoadMoreRecyclerView.setLinearLayout();
+            setRefresh();
             return true;
         }
+        if (id == R.id.action_gridlayout) {
+            mPullLoadMoreRecyclerView.setGridLayout();
+            setRefresh();
+            return true;
+        }
+//        if (id == R.id.action_staggeredgridlayout) {
+//            mPullLoadMoreRecyclerView.setStaggeredGridLayout();
+//            setRefresh();
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
