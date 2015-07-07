@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -18,7 +17,7 @@ import android.widget.LinearLayout;
  */
 public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private PullLoadMoreListener mPullLoadMoreListener;
     private boolean hasMore = true;
     private boolean isRefresh = false;
@@ -39,9 +38,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private void initView(Context context) {
         mContext = context;
         View view = LayoutInflater.from(context).inflate(com.wuxiaolong.pullloadmorerecyclerview.R.layout.pull_loadmore_layout, null);
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefresh(this));
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefresh(this));
 
         mRecyclerView = (RecyclerView) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.recycler_view);
         mRecyclerView.setVerticalScrollBarEnabled(true);
@@ -55,18 +54,18 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         //getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
 
-        mRecyclerView.setOnTouchListener(
-                new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (isRefresh) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-        );
+//        mRecyclerView.setOnTouchListener(
+//                new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        if (isRefresh) {
+//                            return true;
+//                        } else {
+//                            return false;
+//                        }
+//                    }
+//                }
+//        );
 
         mFooterView = (LinearLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.footer_linearlayout);
         mFooterView.setVisibility(View.GONE);
@@ -108,11 +107,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
 
     public void setPullRefreshEnable(boolean enable) {
-        swipeRefreshLayout.setEnabled(enable);
+        mSwipeRefreshLayout.setEnabled(enable);
     }
 
     public boolean getPullRefreshEnable() {
-        return swipeRefreshLayout.isEnabled();
+        return mSwipeRefreshLayout.isEnabled();
     }
 
     public RecyclerView.LayoutManager getLayoutManager() {
@@ -134,10 +133,21 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void setPullLoadMoreCompleted() {
         isRefresh = false;
-        swipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
 
         isLoadMore = false;
         mFooterView.setVisibility(View.GONE);
+
+    }
+
+    public void setRefreshing(final boolean isRefreshing) {
+        mSwipeRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(isRefreshing);
+            }
+        });
 
     }
 

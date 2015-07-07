@@ -1,7 +1,7 @@
 package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,56 +23,64 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMoreRecyclerView);
-//        mPullLoadMoreRecyclerView.setGridLayout(LinearLayoutManager.VERTICAL);
-        setList();
+        mPullLoadMoreRecyclerView.setRefreshing(true);
+        new DataAsyncTask().execute();
         mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
 
     }
 
-    private void setList() {
+    private List<String> setList() {
         List<String> dataList = new ArrayList<>();
         int start = 30 * (mCount - 1);
         for (int i = start; i < 30 * mCount; i++) {
             dataList.add("测试数据" + i);
         }
+        return dataList;
 
-        if (mRecyclerViewAdapter == null) {
-            mRecyclerViewAdapter = new RecyclerViewAdapter(this, dataList);
-            mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-        } else {
-            mRecyclerViewAdapter.getDataList().addAll(dataList);
-            mRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
+    class DataAsyncTask extends AsyncTask<Void, Void, List<String>> {
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return setList();
         }
-        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+
+        @Override
+        protected void onPostExecute(List<String> strings) {
+            super.onPostExecute(strings);
+            if (mRecyclerViewAdapter == null) {
+                mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, strings);
+                mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
+            } else {
+                mRecyclerViewAdapter.getDataList().addAll(strings);
+                mRecyclerViewAdapter.notifyDataSetChanged();
+            }
+            mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+        }
     }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
-            new Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            setRefresh();
-                        }
-                    }, 3000);
+            setRefresh();
         }
 
         @Override
         public void onLoadMore() {
-            new Handler().postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            mCount = mCount + 1;
-                            setList();
-                        }
-                    }, 3000);
+            mCount = mCount + 1;
+            new DataAsyncTask().execute();
         }
     }
 
     private void setRefresh() {
         mRecyclerViewAdapter = null;
         mCount = 1;
-        setList();
+        new DataAsyncTask().execute();
     }
 
     @Override
