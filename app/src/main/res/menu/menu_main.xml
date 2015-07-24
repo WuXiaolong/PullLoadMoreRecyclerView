@@ -12,9 +12,9 @@
         android:orderInCategory="200"
         android:title="@string/gridlayout"
         app:showAsAction="never" />
-    <!--<item-->
-        <!--android:id="@+id/action_staggeredgridlayout"-->
-        <!--android:orderInCategory="300"-->
-        <!--android:title="@string/staggeredgridlayout"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/action_staggeredgridlayout"
+        android:orderInCategory="300"
+        android:title="@string/staggeredgridlayout"
+        app:showAsAction="never" />
 </menu>

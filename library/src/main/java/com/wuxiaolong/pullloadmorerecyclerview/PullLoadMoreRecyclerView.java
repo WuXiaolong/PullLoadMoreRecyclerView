@@ -46,7 +46,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setVerticalScrollBarEnabled(true);
 
         mRecyclerView.setHasFixedSize(true);
-        setLinearLayout();
+//        setLinearLayout();
         // 设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
@@ -94,6 +94,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         // 设置布局管理器
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
+
 
     /**
      * 交错网格布局管理器
@@ -166,6 +167,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void scrollToTop() {
         mRecyclerView.scrollToPosition(0);
     }
+
 
     public void setAdapter(RecyclerView.Adapter adapter) {
         if (adapter != null) {

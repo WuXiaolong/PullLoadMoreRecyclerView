@@ -13,9 +13,9 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
-    int mCount = 1;
-    RecyclerViewAdapter mRecyclerViewAdapter;
+    private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
+    private int mCount = 1;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMoreRecyclerView);
         mPullLoadMoreRecyclerView.setRefreshing(true);
         new DataAsyncTask().execute();
+        mPullLoadMoreRecyclerView.setLinearLayout();
         mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
 
     }
 
     private List<String> setList() {
         List<String> dataList = new ArrayList<>();
-        int start = 30 * (mCount - 1);
-        for (int i = start; i < 30 * mCount; i++) {
+        int start = 20 * (mCount - 1);
+        for (int i = start; i < 20 * mCount; i++) {
             dataList.add("测试数据" + i);
         }
         return dataList;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<String> strings) {
             super.onPostExecute(strings);
             if (mRecyclerViewAdapter == null) {
-                mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, strings);
+                mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, mPullLoadMoreRecyclerView, strings);
                 mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
             } else {
                 mRecyclerViewAdapter.getDataList().addAll(strings);
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onRefresh() {
             setRefresh();
+            new DataAsyncTask().execute();
         }
 
         @Override
@@ -78,9 +80,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRefresh() {
-        mRecyclerViewAdapter = null;
+
+        mRecyclerViewAdapter.getDataList().clear();
+
         mCount = 1;
-        new DataAsyncTask().execute();
+
     }
 
     @Override
@@ -101,19 +105,22 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_linearlayout) {
             mPullLoadMoreRecyclerView.setLinearLayout();
             setRefresh();
-            return true;
+            mRecyclerViewAdapter = null;
         }
         if (id == R.id.action_gridlayout) {
             mPullLoadMoreRecyclerView.setGridLayout();
             setRefresh();
-            return true;
-        }
-//        if (id == R.id.action_staggeredgridlayout) {
-//            mPullLoadMoreRecyclerView.setStaggeredGridLayout();
-//            setRefresh();
-//            return true;
-//        }
+            mRecyclerViewAdapter = null;
 
-        return super.onOptionsItemSelected(item);
+        }
+        if (id == R.id.action_staggeredgridlayout) {
+            mPullLoadMoreRecyclerView.setStaggeredGridLayout();
+            setRefresh();
+        }
+
+        mPullLoadMoreRecyclerView.setRefreshing(true);
+
+        new DataAsyncTask().execute();
+        return true;
     }
 }
