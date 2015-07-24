@@ -4,6 +4,9 @@ RecyclerView实现下拉刷新和上拉加载更多
 # 效果预览
 ![](https://github.com/WuXiaolong/PullLoadMoreRecyclerView/raw/master/screenshots/screenshots.gif)
 
+# 实例APP
+[小米应用商店](http://app.mi.com/download/62799)
+
 # 更多交流
 ###Android技术交流群
 ②群：376526418<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=5017aa79b1bc2726134ce1d6bc3060306022d1a2155f303709b02824d47a8e59"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="剩者为王②群" title="剩者为王②群"></a><br>
