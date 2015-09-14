@@ -2,19 +2,4 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/action_linearlayout"
-        android:orderInCategory="100"
-        android:title="@string/linearlayout"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_gridlayout"
-        android:orderInCategory="200"
-        android:title="@string/gridlayout"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_staggeredgridlayout"
-        android:orderInCategory="300"
-        android:title="@string/staggeredgridlayout"
-        app:showAsAction="never" />
 </menu>

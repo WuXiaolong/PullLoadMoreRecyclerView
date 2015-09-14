@@ -87,9 +87,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
      * 网格布局管理器
      */
 
-    public void setGridLayout() {
+    public void setGridLayout(int spanCount) {
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, spanCount);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         // 设置布局管理器
         mRecyclerView.setLayoutManager(gridLayoutManager);
@@ -100,8 +100,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
      * 交错网格布局管理器
      */
 
-    public void setStaggeredGridLayout() {
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+    public void setStaggeredGridLayout(int spanCount) {
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
         // 设置布局管理器
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
     }
@@ -153,7 +153,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
 
-    public void setPullLoadMoreListener(PullLoadMoreListener listener) {
+    public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
         mPullLoadMoreListener = listener;
     }
 

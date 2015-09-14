@@ -1,91 +1,93 @@
 package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-    private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
-    private int mCount = 1;
-    private RecyclerViewAdapter mRecyclerViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) findViewById(R.id.pullLoadMoreRecyclerView);
-        mPullLoadMoreRecyclerView.setRefreshing(true);
-        new DataAsyncTask().execute();
-        mPullLoadMoreRecyclerView.setLinearLayout();
-        mPullLoadMoreRecyclerView.setPullLoadMoreListener(new PullLoadMoreListener());
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
 
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        setupViewPager(viewPager);
+        // 设置ViewPager的数据等
+        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);//适合很多tab
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);//tab均分,适合少的tab
     }
 
-    private List<String> setList() {
-        List<String> dataList = new ArrayList<>();
-        int start = 20 * (mCount - 1);
-        for (int i = start; i < 20 * mCount; i++) {
-            dataList.add("测试数据" + i);
-        }
-        return dataList;
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
 
-    }
-
-    class DataAsyncTask extends AsyncTask<Void, Void, List<String>> {
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return setList();
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
         }
 
         @Override
-        protected void onPostExecute(List<String> strings) {
-            super.onPostExecute(strings);
-            if (mRecyclerViewAdapter == null) {
-                mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, mPullLoadMoreRecyclerView, strings);
-                mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-            } else {
-                mRecyclerViewAdapter.getDataList().addAll(strings);
-                mRecyclerViewAdapter.notifyDataSetChanged();
-            }
-            mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-        }
-    }
-
-    class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
-        @Override
-        public void onRefresh() {
-            setRefresh();
-            new DataAsyncTask().execute();
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
         @Override
-        public void onLoadMore() {
-            mCount = mCount + 1;
-            new DataAsyncTask().execute();
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 
-    private void setRefresh() {
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        mRecyclerViewAdapter.getDataList().clear();
 
-        mCount = 1;
+        Fragment newfragment = new FristFragment();
+        Bundle data = new Bundle();
+        data.putInt("id", 0);
+        newfragment.setArguments(data);
+        adapter.addFrag(newfragment, "Frist");
 
+        newfragment = new SecondFragment();
+        data = new Bundle();
+        data.putInt("id", 1);
+        newfragment.setArguments(data);
+        adapter.addFrag(newfragment, "Second");
+
+
+        newfragment = new ThirdFragment();
+        data = new Bundle();
+        data.putInt("id", 2);
+        newfragment.setArguments(data);
+        adapter.addFrag(newfragment, "Third");
+
+        viewPager.setAdapter(adapter);
+
+        viewPager.setOffscreenPageLimit(3);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,28 +101,6 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_linearlayout) {
-            mPullLoadMoreRecyclerView.setLinearLayout();
-            setRefresh();
-            mRecyclerViewAdapter = null;
-        }
-        if (id == R.id.action_gridlayout) {
-            mPullLoadMoreRecyclerView.setGridLayout();
-            setRefresh();
-            mRecyclerViewAdapter = null;
-
-        }
-        if (id == R.id.action_staggeredgridlayout) {
-            mPullLoadMoreRecyclerView.setStaggeredGridLayout();
-            setRefresh();
-        }
-
-        mPullLoadMoreRecyclerView.setRefreshing(true);
-
-        new DataAsyncTask().execute();
         return true;
     }
 }
