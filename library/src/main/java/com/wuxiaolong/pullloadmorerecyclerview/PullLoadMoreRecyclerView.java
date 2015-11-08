@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -46,26 +47,25 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setVerticalScrollBarEnabled(true);
 
         mRecyclerView.setHasFixedSize(true);
-//        setLinearLayout();
         // 设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         //添加分割线
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(
         //getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
-
-//        mRecyclerView.setOnTouchListener(
-//                new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        if (isRefresh) {
-//                            return true;
-//                        } else {
-//                            return false;
-//                        }
-//                    }
-//                }
-//        );
+        //以下解决下拉加载中，再往上拉则IndexOutOfBoundsException异常崩溃
+        mRecyclerView.setOnTouchListener(
+                new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (isRefresh) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }
+        );
 
         mFooterView = (LinearLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.footer_linearlayout);
         mFooterView.setVisibility(View.GONE);
