@@ -47,13 +47,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setVerticalScrollBarEnabled(true);
 
         mRecyclerView.setHasFixedSize(true);
-        // 设置Item增加、移除动画
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //添加分割线
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(
         //getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
-        //以下解决下拉加载中，再往上拉则IndexOutOfBoundsException异常崩溃
+        //Solve IndexOutOfBoundsException exception
         mRecyclerView.setOnTouchListener(
                 new View.OnTouchListener() {
                     @Override
@@ -75,7 +73,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
 
     /**
-     * 线性布局管理器
+     * LinearLayoutManager
      */
     public void setLinearLayout() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -84,25 +82,23 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     /**
-     * 网格布局管理器
+     * GridLayoutManager
      */
 
     public void setGridLayout(int spanCount) {
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, spanCount);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        // 设置布局管理器
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
 
     /**
-     * 交错网格布局管理器
+     * StaggeredGridLayoutManager
      */
 
     public void setStaggeredGridLayout(int spanCount) {
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
-        // 设置布局管理器
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
     }
 
@@ -128,9 +124,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         }
     }
 
-    /**
-     * 加载更多完毕,为防止频繁网络请求,isLoadMore为false才可再次请求更多数据
-     */
 
     public void setPullLoadMoreCompleted() {
         isRefresh = false;

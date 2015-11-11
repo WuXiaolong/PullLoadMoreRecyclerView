@@ -7,8 +7,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by WuXiaolong on 2015/7/7.
- * <p>
- * 监听上拉至底部滚动监听
  */
 public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
     PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
@@ -30,13 +28,13 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
             firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         } else if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = ((GridLayoutManager) layoutManager);
-            //通过LayoutManager找到当前显示的最后的item的position
+            //Position to find the final item of the current LayoutManager
             lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
             firstVisibleItem = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = ((StaggeredGridLayoutManager) layoutManager);
-            //因为StaggeredGridLayoutManager的特殊性可能导致最后显示的item存在多个，所以这里取到的是一个数组
-            //得到这个数组后再取到数组中position值最大的那个就是最后显示的position值了
+            // since may lead to the final item has more than one StaggeredGridLayoutManager the particularity of the so here that is an array
+            // this array into an array of position and then take the maximum value that is the last show the position value
             int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
             staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
             lastVisibleItem = findMax(lastPositions);
@@ -52,7 +50,7 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
 
 
         /**
-         * 无论水平还是垂直
+         * Either horizontal or vertical
          */
         if (!mPullLoadMoreRecyclerView.isRefresh() && mPullLoadMoreRecyclerView.isHasMore() && (lastVisibleItem >= totalItemCount - 1)
                 && !mPullLoadMoreRecyclerView.isLoadMore() && (dx > 0 || dy > 0)) {
@@ -61,7 +59,7 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         }
 
     }
-    //找到数组中的最大值
+    //To find the maximum value in the array
 
     private int findMax(int[] lastPositions) {
 
