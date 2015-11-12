@@ -32,5 +32,6 @@ dependencies {
 ③群：370527306<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a992ba077da4c8325cbfef1c9e81f0443ffb782a0f2135c1a8f7326baac58ac"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="剩者为王③群" title="剩者为王③群"></a>
 
 # 关于作者
-[个人博客](http://wuxiaolong.me/)
-[微博](http://weibo.com/u/2175011601)
+个人博客:[http://wuxiaolong.me/](http://wuxiaolong.me/)
+
+微博:[吴小龙同學](http://weibo.com/u/2175011601)
