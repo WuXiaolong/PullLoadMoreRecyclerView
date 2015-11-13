@@ -16,8 +16,8 @@ dependencies {
 ```
 设置线性布局
 ```java
-  mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
-  mPullLoadMoreRecyclerView.setLinearLayout();
+ mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
+ mPullLoadMoreRecyclerView.setLinearLayout();
 ```
 设置网格布局
 ```java
@@ -26,6 +26,14 @@ dependencies {
 设置交错网格布局，即瀑布流效果
 ```java
  mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);//参数为列数
+```
+下拉刷新
+```java
+mPullLoadMoreRecyclerView.setRefreshing(true);
+```
+刷新结束
+```java
+mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
 ```
 # 更多交流
 ### Android技术交流群
