@@ -101,7 +101,7 @@ mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
 [http://wuxiaolong.me/](http://wuxiaolong.me/)
 
 # 作者微博
-[吴小龙同學](http://weibo.com/u/2175011601) <wb:follow-button uid="2991975565" type="red_1" width="67" height="24" ></wb:follow-button>
+[吴小龙同學](http://weibo.com/u/2175011601) 
 
 # License
 Apache 2.0
