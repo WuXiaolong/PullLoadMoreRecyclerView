@@ -115,6 +115,13 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         return mRecyclerView.getLayoutManager();
     }
 
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+        return mSwipeRefreshLayout;
+    }
+
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
