@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 
 /**
  * Created by WuXiaolong on 2015/7/2.
+ * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
+ * weibo:http://weibo.com/u/2175011601
  */
 public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
@@ -23,6 +25,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean hasMore = true;
     private boolean isRefresh = false;
     private boolean isLoadMore = false;
+    private boolean pullRefreshEnable = true;
     private LinearLayout mFooterView;
     private Context mContext;
 
@@ -51,19 +54,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         //mRecyclerView.addItemDecoration(new DividerItemDecoration(
         //getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
-        //Solve IndexOutOfBoundsException exception
-        mRecyclerView.setOnTouchListener(
-                new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        if (isRefresh) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    }
-                }
-        );
+
+        mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
         mFooterView = (LinearLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.footer_linearlayout);
         mFooterView.setVisibility(View.GONE);
@@ -98,17 +90,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
      */
 
     public void setStaggeredGridLayout(int spanCount) {
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
-    }
-
-
-    public void setPullRefreshEnable(boolean enable) {
-        mSwipeRefreshLayout.setEnabled(enable);
-    }
-
-    public boolean getPullRefreshEnable() {
-        return mSwipeRefreshLayout.isEnabled();
     }
 
     public RecyclerView.LayoutManager getLayoutManager() {
@@ -118,10 +102,77 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
+
+    public void scrollToTop() {
+        mRecyclerView.scrollToPosition(0);
+    }
+
+
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        if (adapter != null) {
+            mRecyclerView.setAdapter(adapter);
+        }
+    }
+
+    public void setPullRefreshEnable(boolean enable) {
+        pullRefreshEnable = enable;
+        setSwipeRefreshEnable(enable);
+    }
+
+    public boolean getPullRefreshEnable() {
+        return pullRefreshEnable;
+    }
+
+    public void setSwipeRefreshEnable(boolean enable) {
+        mSwipeRefreshLayout.setEnabled(enable);
+    }
+
+    public boolean getSwipeRefreshEnable() {
+        return mSwipeRefreshLayout.isEnabled();
+    }
+
+
+    public void setColorSchemeResources(int... colorResIds) {
+        mSwipeRefreshLayout.setColorSchemeResources(colorResIds);
+
+    }
+
     public SwipeRefreshLayout getSwipeRefreshLayout() {
         return mSwipeRefreshLayout;
     }
 
+    public void setRefreshing(final boolean isRefreshing) {
+        mSwipeRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                if (pullRefreshEnable)
+                    mSwipeRefreshLayout.setRefreshing(isRefreshing);
+            }
+        });
+
+    }
+
+    /**
+     * Solve IndexOutOfBoundsException exception
+     */
+    public class onTouchRecyclerView implements OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (isRefresh || isLoadMore) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    public void refresh() {
+        if (mPullLoadMoreListener != null) {
+            mPullLoadMoreListener.onRefresh();
+        }
+    }
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
@@ -141,39 +192,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     }
 
-    public void setRefreshing(final boolean isRefreshing) {
-        mSwipeRefreshLayout.post(new Runnable() {
-
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(isRefreshing);
-            }
-        });
-
-    }
-
 
     public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
         mPullLoadMoreListener = listener;
     }
 
-    public void refresh() {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        if (mPullLoadMoreListener != null) {
-            mPullLoadMoreListener.onRefresh();
-        }
-    }
-
-    public void scrollToTop() {
-        mRecyclerView.scrollToPosition(0);
-    }
-
-
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        if (adapter != null) {
-            mRecyclerView.setAdapter(adapter);
-        }
-    }
 
     public boolean isLoadMore() {
         return isLoadMore;

@@ -1,7 +1,7 @@
 package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,61 +37,53 @@ public class ThirdFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
         mPullLoadMoreRecyclerView.setRefreshing(true);
-        new DataAsyncTask().execute();
         mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
+        getData();
     }
 
     private List<Map<String, String>> setList() {
         List<Map<String, String>> dataList = new ArrayList<>();
-        int start = 20 * (mCount - 1);
+        int start = 30 * (mCount - 1);
         Map<String, String> map;
-        for (int i = start; i < 20 * mCount; i++) {
+        for (int i = start; i < 30 * mCount; i++) {
             map = new HashMap<>();
             map.put("text", "Third" + i);
-            map.put("height", (100 + 2 * i) + "");
+            map.put("height", (100 + 5 * i) + "");
             dataList.add(map);
         }
         return dataList;
 
     }
 
-    class DataAsyncTask extends AsyncTask<Void, Void, List<Map<String, String>>> {
-        @Override
-        protected List<Map<String, String>> doInBackground(Void... params) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return setList();
-        }
 
-        @Override
-        protected void onPostExecute(List<Map<String, String>> strings) {
-            super.onPostExecute(strings);
-            if (mRecyclerViewAdapter == null) {
-                mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), strings);
-                mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-            } else {
-                mRecyclerViewAdapter.getDataList().addAll(strings);
-                mRecyclerViewAdapter.notifyDataSetChanged();
+    private void getData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecyclerViewAdapter == null) {
+                    mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), setList());
+                    mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
+                } else {
+                    mRecyclerViewAdapter.getDataList().addAll(setList());
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                }
+                mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
-            mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-        }
+        }, 3000);
     }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
             setRefresh();
-            new DataAsyncTask().execute();
+            getData();
         }
 
         @Override
         public void onLoadMore() {
             mCount = mCount + 1;
-            new DataAsyncTask().execute();
+            getData();
         }
     }
 

@@ -41,17 +41,12 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
             firstVisibleItem = staggeredGridLayoutManager.findFirstVisibleItemPositions(lastPositions)[0];
         }
         if (firstVisibleItem == 0) {
-            if (!mPullLoadMoreRecyclerView.isLoadMore()) {
-                mPullLoadMoreRecyclerView.setPullRefreshEnable(true);
-            }
+            if (mPullLoadMoreRecyclerView.getPullRefreshEnable())
+                mPullLoadMoreRecyclerView.setSwipeRefreshEnable(true);
+
         } else {
-            mPullLoadMoreRecyclerView.setPullRefreshEnable(false);
+            mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
         }
-
-
-        /**
-         * Either horizontal or vertical
-         */
         if (!mPullLoadMoreRecyclerView.isRefresh() && mPullLoadMoreRecyclerView.isHasMore() && (lastVisibleItem >= totalItemCount - 1)
                 && !mPullLoadMoreRecyclerView.isLoadMore() && (dx > 0 || dy > 0)) {
             mPullLoadMoreRecyclerView.setIsLoadMore(true);

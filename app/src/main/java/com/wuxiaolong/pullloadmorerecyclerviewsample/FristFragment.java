@@ -1,8 +1,8 @@
 package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +27,6 @@ public class FristFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_frist, container, false);
     }
 
@@ -36,9 +35,25 @@ public class FristFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
         mPullLoadMoreRecyclerView.setRefreshing(true);
-        new DataAsyncTask().execute();
         mPullLoadMoreRecyclerView.setLinearLayout();
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
+        getData();
+    }
+
+    private void getData() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecyclerViewAdapter == null) {
+                    mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
+                    mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
+                } else {
+                    mRecyclerViewAdapter.getDataList().addAll(setList());
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                }
+                mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+            }
+        }, 3000);
     }
 
     private List<String> setList() {
@@ -51,50 +66,23 @@ public class FristFragment extends Fragment {
 
     }
 
-    class DataAsyncTask extends AsyncTask<Void, Void, List<String>> {
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return setList();
-        }
-
-        @Override
-        protected void onPostExecute(List<String> strings) {
-            super.onPostExecute(strings);
-            if (mRecyclerViewAdapter == null) {
-                mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), strings);
-                mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-            } else {
-                mRecyclerViewAdapter.getDataList().addAll(strings);
-                mRecyclerViewAdapter.notifyDataSetChanged();
-            }
-            mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
-        }
-    }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
             setRefresh();
-            new DataAsyncTask().execute();
+            getData();
         }
 
         @Override
         public void onLoadMore() {
             mCount = mCount + 1;
-            new DataAsyncTask().execute();
+            getData();
         }
     }
 
     private void setRefresh() {
-
         mRecyclerViewAdapter.getDataList().clear();
-
         mCount = 1;
-
     }
 }
