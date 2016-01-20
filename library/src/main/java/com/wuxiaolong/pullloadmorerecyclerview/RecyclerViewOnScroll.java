@@ -24,7 +24,7 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         int totalItemCount = layoutManager.getItemCount();
         if (layoutManager instanceof LinearLayoutManager) {
             LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) layoutManager);
-            lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+            lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
             firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         } else if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = ((GridLayoutManager) layoutManager);

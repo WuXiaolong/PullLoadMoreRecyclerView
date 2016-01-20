@@ -4,6 +4,7 @@ package com.wuxiaolong.pullloadmorerecyclerviewsample;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +73,7 @@ public class FristFragment extends Fragment {
 
         @Override
         public void onLoadMore() {
+            Log.e("wxl","onLoadMore");
             mCount = mCount + 1;
             getData();
         }
