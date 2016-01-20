@@ -30,23 +30,19 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
-        mPullLoadMoreRecyclerView.setRefreshing(true);
+        //mPullLoadMoreRecyclerView.setRefreshing(true);
         mPullLoadMoreRecyclerView.setGridLayout(2);
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
+        mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        getData();
     }
 
     private void getData() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mRecyclerViewAdapter == null) {
-                    mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
-                    mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-                } else {
-                    mRecyclerViewAdapter.getDataList().addAll(setList());
-                    mRecyclerViewAdapter.notifyDataSetChanged();
-                }
+                mRecyclerViewAdapter.getDataList().addAll(setList());
+                mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 3000);
