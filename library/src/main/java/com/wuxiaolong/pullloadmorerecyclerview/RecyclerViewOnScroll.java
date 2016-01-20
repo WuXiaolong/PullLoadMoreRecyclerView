@@ -18,26 +18,26 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        int lastVisibleItem = 0;
+        int lastCompletelyVisibleItem = 0;
         int firstVisibleItem = 0;
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         int totalItemCount = layoutManager.getItemCount();
-        if (layoutManager instanceof LinearLayoutManager) {
-            LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) layoutManager);
-            lastVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-            firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-        } else if (layoutManager instanceof GridLayoutManager) {
+        if (layoutManager instanceof GridLayoutManager) {
             GridLayoutManager gridLayoutManager = ((GridLayoutManager) layoutManager);
             //Position to find the final item of the current LayoutManager
-            lastVisibleItem = gridLayoutManager.findLastVisibleItemPosition();
+            lastCompletelyVisibleItem = gridLayoutManager.findLastCompletelyVisibleItemPosition();
             firstVisibleItem = gridLayoutManager.findFirstCompletelyVisibleItemPosition();
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            LinearLayoutManager linearLayoutManager = ((LinearLayoutManager) layoutManager);
+            lastCompletelyVisibleItem = linearLayoutManager.findLastCompletelyVisibleItemPosition();
+            firstVisibleItem = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
         } else if (layoutManager instanceof StaggeredGridLayoutManager) {
             StaggeredGridLayoutManager staggeredGridLayoutManager = ((StaggeredGridLayoutManager) layoutManager);
             // since may lead to the final item has more than one StaggeredGridLayoutManager the particularity of the so here that is an array
             // this array into an array of position and then take the maximum value that is the last show the position value
             int[] lastPositions = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
-            staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
-            lastVisibleItem = findMax(lastPositions);
+            staggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(lastPositions);
+            lastCompletelyVisibleItem = findMax(lastPositions);
             firstVisibleItem = staggeredGridLayoutManager.findFirstVisibleItemPositions(lastPositions)[0];
         }
         if (firstVisibleItem == 0) {
@@ -47,8 +47,11 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         } else {
             mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
         }
-        if (!mPullLoadMoreRecyclerView.isRefresh() && mPullLoadMoreRecyclerView.isHasMore() && (lastVisibleItem >= totalItemCount - 1)
-                && !mPullLoadMoreRecyclerView.isLoadMore() && (dx > 0 || dy > 0)) {
+        if (!mPullLoadMoreRecyclerView.isRefresh()
+                && mPullLoadMoreRecyclerView.isHasMore()
+                && (lastCompletelyVisibleItem == totalItemCount - 1)
+                && !mPullLoadMoreRecyclerView.isLoadMore()
+                && (dx > 0 || dy > 0)) {
             mPullLoadMoreRecyclerView.setIsLoadMore(true);
             mPullLoadMoreRecyclerView.loadMore();
         }

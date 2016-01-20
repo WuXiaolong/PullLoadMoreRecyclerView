@@ -26,7 +26,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean isRefresh = false;
     private boolean isLoadMore = false;
     private boolean pullRefreshEnable = true;
-    private LinearLayout mFooterView;
+    private View mFooterView;
     private Context mContext;
 
     public PullLoadMoreRecyclerView(Context context) {
@@ -51,13 +51,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        //mRecyclerView.addItemDecoration(new DividerItemDecoration(
-        //getActivity(), DividerItemDecoration.HORIZONTAL_LIST));
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
 
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
-        mFooterView = (LinearLayout) view.findViewById(com.wuxiaolong.pullloadmorerecyclerview.R.id.footer_linearlayout);
+        mFooterView = view.findViewById(R.id.footerView);
         mFooterView.setVisibility(View.GONE);
         this.addView(view);
 
