@@ -4,13 +4,13 @@
 ![](https://github.com/WuXiaolong/PullLoadMoreRecyclerView/raw/master/screenshots/screenshots.gif)
 
 # 实例APP
-[魅族应用商店](http://app.meizu.com/apps/public/detail?package_name=com.xiaomolong.ufosay)
+[小米应用商店](http://app.mi.com/detail/25323)
 
 # 使用方法
 ## build.gradle文件
 ```java
 dependencies {
-  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.3'
+  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.4'
 }
 ```
 ## xml引用
@@ -92,6 +92,14 @@ mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
 ### 不需要下拉刷新
 ```java
 mPullLoadMoreRecyclerView.setPullRefreshEnable(false);
+```
+### 不需要上拉刷新
+```java
+mPullLoadMoreRecyclerView.setPushRefreshEnable(false);
+```
+### 设置上拉刷新文字
+```java
+mPullLoadMoreRecyclerView.setFooterViewText("loading");
 ```
 ### 设置下拉刷新颜色
 ```java

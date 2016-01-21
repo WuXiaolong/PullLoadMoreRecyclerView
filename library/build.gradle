@@ -3,7 +3,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version, 这个version影响后面的引用
-version = "1.0.3"
+version = "1.0.4"
 
 android {
     compileSdkVersion 23
@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 104
+        versionName "1.0.4"
     }
     buildTypes {
         release {
@@ -32,7 +32,8 @@ dependencies {
 
 def siteUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'      // 项目的主页
 def gitUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView.git'   // Git仓库的url
-group = "com.wuxiaolong.pullloadmorerecyclerview"                                        // Maven Group ID for the artifact，一般填你唯一的包名
+group = "com.wuxiaolong.pullloadmorerecyclerview"//Group ID,一般填你唯一的包名
+
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -72,6 +73,7 @@ task sourcesJar(type: Jar) {
 task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.encoding = "UTF-8" //添加编码方式，才不会报编码错误
 }
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
@@ -89,7 +91,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "pullloadmorerecyclerview"    //发布到JCenter上的项目名字
+        name = "pullloadmorerecyclerview"//发布到JCenter上的项目名字
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]

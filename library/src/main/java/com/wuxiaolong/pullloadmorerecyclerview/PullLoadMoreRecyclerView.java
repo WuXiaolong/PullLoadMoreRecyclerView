@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by WuXiaolong on 2015/7/2.
@@ -26,8 +27,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean isRefresh = false;
     private boolean isLoadMore = false;
     private boolean pullRefreshEnable = true;
+    private boolean pushRefreshEnable = true;
     private View mFooterView;
     private Context mContext;
+    private TextView loadMoreText;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -56,6 +59,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
         mFooterView = view.findViewById(R.id.footerView);
+        loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
         mFooterView.setVisibility(View.GONE);
         this.addView(view);
 
@@ -165,6 +169,21 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         }
     }
 
+    public boolean getPushRefreshEnable() {
+        return pushRefreshEnable;
+    }
+
+    public void setPushRefreshEnable(boolean pushRefreshEnable) {
+        this.pushRefreshEnable = pushRefreshEnable;
+    }
+
+    public void setFooterViewText(CharSequence text) {
+        loadMoreText.setText(text);
+    }
+
+    public void setFooterViewText(int resid) {
+        loadMoreText.setText(resid);
+    }
 
     public void refresh() {
         if (mPullLoadMoreListener != null) {
@@ -175,6 +194,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
             mFooterView.setVisibility(View.VISIBLE);
+            invalidate();
             mPullLoadMoreListener.onLoadMore();
 
         }
@@ -221,8 +241,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     public interface PullLoadMoreListener {
-        public void onRefresh();
+        void onRefresh();
 
-        public void onLoadMore();
+        void onLoadMore();
     }
 }

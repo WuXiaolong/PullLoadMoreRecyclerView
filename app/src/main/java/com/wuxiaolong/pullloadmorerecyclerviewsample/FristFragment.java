@@ -35,7 +35,10 @@ public class FristFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
-        //mPullLoadMoreRecyclerView.setRefreshing(true);
+        //mPullLoadMoreRecyclerView.setRefreshing(true);//设置下拉刷新是否可见
+        //mPullLoadMoreRecyclerView.setPullRefreshEnable(false);//设置是否下拉刷新
+        //mPullLoadMoreRecyclerView.setPushRefreshEnable(false);//设置是否上拉刷新
+        mPullLoadMoreRecyclerView.setFooterViewText("loading");//设置上拉刷新文字
         mPullLoadMoreRecyclerView.setLinearLayout();
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
@@ -73,7 +76,7 @@ public class FristFragment extends Fragment {
 
         @Override
         public void onLoadMore() {
-            Log.e("wxl","onLoadMore");
+            Log.e("wxl", "onLoadMore");
             mCount = mCount + 1;
             getData();
         }
