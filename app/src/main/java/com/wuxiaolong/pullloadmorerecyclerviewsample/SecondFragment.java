@@ -37,10 +37,17 @@ public class SecondFragment extends Fragment {
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
     }
 
-    private void getData() {
+    private void getData(final int page) {
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run() { // if load data and success
+                if (page == 1) {
+                    // refresh
+                    mRecyclerViewAdapter.getDataList().clear();
+                } else {
+                    // load more
+                }
+                mCount = page;
                 mRecyclerViewAdapter.getDataList().addAll(setList());
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
@@ -62,23 +69,14 @@ public class SecondFragment extends Fragment {
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
-            setRefresh();
-            getData();
+            getData(1);
         }
 
         @Override
         public void onLoadMore() {
             mCount = mCount + 1;
-            getData();
+            getData(mCount + 1);
         }
-    }
-
-    private void setRefresh() {
-
-        mRecyclerViewAdapter.getDataList().clear();
-
-        mCount = 1;
-
     }
 
 }

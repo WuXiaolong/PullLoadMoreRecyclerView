@@ -56,7 +56,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
 
-        mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
+//        mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
         mFooterView = view.findViewById(R.id.footerView);
         loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);

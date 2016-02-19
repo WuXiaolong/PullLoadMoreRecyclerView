@@ -1,6 +1,5 @@
 package com.wuxiaolong.pullloadmorerecyclerviewsample;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -14,7 +13,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -23,7 +21,6 @@ public class FristFragment extends Fragment {
     private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
     private int mCount = 1;
     private RecyclerViewAdapter mRecyclerViewAdapter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,15 +42,24 @@ public class FristFragment extends Fragment {
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
     }
 
-    private void getData() {
+    private void getData(final int page) {
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run() { // if load data and success
+                if (page == 1) {
+                    // refresh
+                    mRecyclerViewAdapter.getDataList().clear();
+                } else {
+                    // load more
+                }
+                mCount = page;
                 mRecyclerViewAdapter.getDataList().addAll(setList());
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 3000);
+
+        // else don't change mCount
     }
 
     private List<String> setList() {
@@ -66,24 +72,17 @@ public class FristFragment extends Fragment {
 
     }
 
-
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
-            setRefresh();
-            getData();
+            getData(1);
         }
 
         @Override
         public void onLoadMore() {
             Log.e("wxl", "onLoadMore");
-            mCount = mCount + 1;
-            getData();
+            getData(mCount + 1);
         }
     }
 
-    private void setRefresh() {
-        mRecyclerViewAdapter.getDataList().clear();
-        mCount = 1;
-    }
 }
