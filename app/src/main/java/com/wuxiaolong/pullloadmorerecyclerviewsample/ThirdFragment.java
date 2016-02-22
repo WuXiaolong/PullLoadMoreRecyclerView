@@ -37,16 +37,16 @@ public class ThirdFragment extends Fragment {
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
         //mPullLoadMoreRecyclerView.setRefreshing(true);
         mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);
-        mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), setList());
+        mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), setList(mCount));
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
     }
 
-    private List<Map<String, String>> setList() {
+    private List<Map<String, String>> setList(int page) {
         List<Map<String, String>> dataList = new ArrayList<>();
         int start = 30 * (mCount - 1);
         Map<String, String> map;
-        for (int i = start; i < 30 * mCount; i++) {
+        for (int i = start; i < 30 * page; i++) {
             map = new HashMap<>();
             map.put("text", "Third" + i);
             map.put("height", (100 + 5 * i) + "");
@@ -67,7 +67,7 @@ public class ThirdFragment extends Fragment {
                     // load more
                 }
                 mCount = page;
-                mRecyclerViewAdapter.getDataList().addAll(setList());
+                mRecyclerViewAdapter.getDataList().addAll(setList(page));
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }

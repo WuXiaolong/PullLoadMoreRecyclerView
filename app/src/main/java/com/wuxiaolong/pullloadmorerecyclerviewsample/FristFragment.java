@@ -37,7 +37,7 @@ public class FristFragment extends Fragment {
         //mPullLoadMoreRecyclerView.setPushRefreshEnable(false);//设置是否上拉刷新
         mPullLoadMoreRecyclerView.setFooterViewText("loading");//设置上拉刷新文字
         mPullLoadMoreRecyclerView.setLinearLayout();
-        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList(mCount));
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
     }
@@ -53,7 +53,7 @@ public class FristFragment extends Fragment {
                     // load more
                 }
                 mCount = page;
-                mRecyclerViewAdapter.getDataList().addAll(setList());
+                mRecyclerViewAdapter.getDataList().addAll(setList(page));
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
@@ -62,10 +62,10 @@ public class FristFragment extends Fragment {
         // else don't change mCount
     }
 
-    private List<String> setList() {
+    private List<String> setList(int page) {
         List<String> dataList = new ArrayList<>();
-        int start = 20 * (mCount - 1);
-        for (int i = start; i < 20 * mCount; i++) {
+        int start = 20 * (page - 1);
+        for (int i = start; i < 20 * page; i++) {
             dataList.add("Frist" + i);
         }
         return dataList;
