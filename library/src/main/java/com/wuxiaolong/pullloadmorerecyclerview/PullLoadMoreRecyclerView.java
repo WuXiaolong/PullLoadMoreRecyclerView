@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -55,9 +54,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
-
-//        mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
-
         mFooterView = view.findViewById(R.id.footerView);
         loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
         mFooterView.setVisibility(View.GONE);
@@ -153,20 +149,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             }
         });
 
-    }
-
-    /**
-     * Solve IndexOutOfBoundsException exception
-     */
-    public class onTouchRecyclerView implements OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (isRefresh || isLoadMore) {
-                return true;
-            } else {
-                return false;
-            }
-        }
     }
 
     public boolean getPushRefreshEnable() {
