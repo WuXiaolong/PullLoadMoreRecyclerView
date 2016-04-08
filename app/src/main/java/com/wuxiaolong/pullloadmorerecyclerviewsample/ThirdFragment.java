@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class ThirdFragment extends Fragment {
     private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
     private int mCount = 1;
@@ -38,16 +37,16 @@ public class ThirdFragment extends Fragment {
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
         //mPullLoadMoreRecyclerView.setRefreshing(true);
         mPullLoadMoreRecyclerView.setStaggeredGridLayout(2);
-        mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), setList());
+        mRecyclerViewAdapter = new StaggeredRecycleViewAdapter(getActivity(), setList(mCount));
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
     }
 
-    private List<Map<String, String>> setList() {
+    private List<Map<String, String>> setList(int page) {
         List<Map<String, String>> dataList = new ArrayList<>();
         int start = 30 * (mCount - 1);
         Map<String, String> map;
-        for (int i = start; i < 30 * mCount; i++) {
+        for (int i = start; i < 30 * page; i++) {
             map = new HashMap<>();
             map.put("text", "Third" + i);
             map.put("height", (100 + 5 * i) + "");
@@ -57,12 +56,18 @@ public class ThirdFragment extends Fragment {
 
     }
 
-
-    private void getData() {
+    private void getData(final int page) {
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
-                mRecyclerViewAdapter.getDataList().addAll(setList());
+            public void run() { // if load data and success
+                if (page == 1) {
+                    // refresh
+                    mRecyclerViewAdapter.getDataList().clear();
+                } else {
+                    // load more
+                }
+                mCount = page;
+                mRecyclerViewAdapter.getDataList().addAll(setList(page));
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
@@ -72,23 +77,13 @@ public class ThirdFragment extends Fragment {
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
         @Override
         public void onRefresh() {
-            setRefresh();
-            getData();
+            getData(1);
         }
 
         @Override
         public void onLoadMore() {
-            mCount = mCount + 1;
-            getData();
+            getData(mCount + 1);
         }
-    }
-
-    private void setRefresh() {
-
-        mRecyclerViewAdapter.getDataList().clear();
-
-        mCount = 1;
-
     }
 
 }

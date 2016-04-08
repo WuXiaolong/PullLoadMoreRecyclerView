@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,11 +30,14 @@ public class StaggeredRecycleViewAdapter extends RecyclerView.Adapter<StaggeredR
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
+        public Button removeBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
+            removeBtn = (Button) itemView.findViewById(R.id.btn_remove);
         }
+
     }
 
     @Override
@@ -43,9 +47,17 @@ public class StaggeredRecycleViewAdapter extends RecyclerView.Adapter<StaggeredR
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.title.setText(dataList.get(position).get("text"));
         holder.title.setHeight(Integer.parseInt(dataList.get(position).get("height")));//高度随机，下拉刷新高度会变
+        holder.removeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // https://code.google.com/p/android/issues/detail?id=77846#c131
+                dataList.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
