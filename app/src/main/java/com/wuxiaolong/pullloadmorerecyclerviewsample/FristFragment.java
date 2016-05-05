@@ -49,11 +49,18 @@ public class FristFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerViewAdapter.getDataList().addAll(setList());
-                mRecyclerViewAdapter.notifyDataSetChanged();
-                mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRecyclerViewAdapter.getDataList().addAll(setList());
+                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
+                    }
+                });
+
             }
-        }, 3000);
+        }, 2000);
+
     }
 
     private List<String> setList() {
@@ -83,7 +90,7 @@ public class FristFragment extends Fragment {
     }
 
     private void setRefresh() {
-        mRecyclerViewAdapter.getDataList().clear();
+        mRecyclerViewAdapter.removeAllDataList();
         mCount = 1;
     }
 }

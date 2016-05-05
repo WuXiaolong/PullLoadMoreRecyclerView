@@ -21,6 +21,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return dataList;
     }
 
+    public void removeAllDataList() {
+        this.dataList.removeAll(dataList);
+    }
+
     public RecyclerViewAdapter(Context context, List<String> dataList) {
         this.dataList = dataList;
         mContext = context;

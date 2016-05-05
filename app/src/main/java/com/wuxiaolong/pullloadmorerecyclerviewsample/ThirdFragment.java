@@ -66,7 +66,7 @@ public class ThirdFragment extends Fragment {
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
-        }, 3000);
+        }, 2000);
     }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {

@@ -45,7 +45,7 @@ public class SecondFragment extends Fragment {
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
-        }, 3000);
+        }, 2000);
     }
 
     private List<String> setList() {

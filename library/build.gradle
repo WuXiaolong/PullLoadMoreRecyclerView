@@ -7,7 +7,7 @@ version = "1.0.4"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "22.0.1"
+    buildToolsVersion "23.0.2"
     resourcePrefix "PullLoadMoreRecyclerView"	//这个随便填
     defaultConfig {
         minSdkVersion 14
