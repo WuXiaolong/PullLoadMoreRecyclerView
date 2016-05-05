@@ -40,7 +40,7 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
             lastCompletelyVisibleItem = findMax(lastPositions);
             firstVisibleItem = staggeredGridLayoutManager.findFirstVisibleItemPositions(lastPositions)[0];
         }
-        if (firstVisibleItem == 0) {
+        if (firstVisibleItem == 0 || firstVisibleItem == RecyclerView.NO_POSITION) {
             if (mPullLoadMoreRecyclerView.getPullRefreshEnable())
                 mPullLoadMoreRecyclerView.setSwipeRefreshEnable(true);
         } else {
