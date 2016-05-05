@@ -1,19 +1,14 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-// 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version, 这个version影响后面的引用
-version = "1.0.4"
+apply plugin: 'com.novoda.bintray-release'//添加
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-    resourcePrefix "PullLoadMoreRecyclerView"	//这个随便填
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 104
-        versionName "1.0.4"
+        versionCode 105
+        versionName "1.0.5"
     }
     buildTypes {
         release {
@@ -25,78 +20,20 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 
 }
 
-def siteUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'      // 项目的主页
-def gitUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView.git'   // Git仓库的url
-group = "com.wuxiaolong.pullloadmorerecyclerview"//Group ID,一般填你唯一的包名
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-                // Add your description here
-                name 'RecyclerView实现下拉刷新和上拉加载更多以及瀑布流效果'    //项目描述
-                url siteUrl
-                // Set your license
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'WuXiaolong'        //填写的一些基本信息
-                        name 'WuXiaolong'
-                        email '1413129987@qq.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    options.encoding = "UTF-8" //添加编码方式，才不会报编码错误
-}
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "pullloadmorerecyclerview"//发布到JCenter上的项目名字
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["Apache-2.0"]
-        publish = true
-    }
+//添加
+publish {
+    userOrg = 'WuXiaolong'//bintray.com用户名
+    groupId = 'com.wuxiaolong.pullloadmorerecyclerview'//jcenter上的路径
+    artifactId = 'pullloadmorerecyclerview'//项目名称
+    publishVersion = '1.0.5'//版本号
+    desc = '实现RecyclerView下拉刷新和上拉加载更多以及RecyclerView线性、网格、瀑布流效果演示'//描述，不重要
+    website = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'
+//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
 
 
