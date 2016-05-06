@@ -10,7 +10,7 @@
 ## build.gradle文件
 ```java
 dependencies {
-  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.4'
+  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.5'
 }
 ```
 ## xml引用
