@@ -2,4 +2,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
+
+    <item android:id="@+id/menu_setting" android:title="清除数据"/>
 </menu>

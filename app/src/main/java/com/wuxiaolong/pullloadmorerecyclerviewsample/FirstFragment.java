@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FristFragment extends Fragment {
+public class FirstFragment extends Fragment {
 
     private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
     private int mCount = 1;
@@ -43,6 +43,7 @@ public class FristFragment extends Fragment {
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
+        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view,null));
     }
 
     private void getData() {
@@ -62,6 +63,12 @@ public class FristFragment extends Fragment {
         }, 2000);
 
     }
+
+    public void clearData(){
+        mRecyclerViewAdapter.getDataList().clear();
+        mRecyclerViewAdapter.notifyDataSetChanged();
+    }
+
 
     private List<String> setList() {
         List<String> dataList = new ArrayList<>();
