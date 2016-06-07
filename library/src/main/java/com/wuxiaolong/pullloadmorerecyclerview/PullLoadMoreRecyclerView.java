@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,8 +30,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean pullRefreshEnable = true;
     private boolean pushRefreshEnable = true;
     private View mFooterView;
+    private FrameLayout mEmptyViewContainer;
     private Context mContext;
     private TextView loadMoreText;
+    private PullLoadMoreRecyclerView.AdapterDataObserver mEmptyDataObserver;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -59,8 +62,12 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
         mFooterView = view.findViewById(R.id.footerView);
+        mEmptyViewContainer = (FrameLayout) view.findViewById(R.id.emptyView);
+
         loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
         mFooterView.setVisibility(View.GONE);
+        mEmptyViewContainer.setVisibility(View.GONE);
+
         this.addView(view);
 
     }
@@ -113,7 +120,25 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public void setAdapter(RecyclerView.Adapter adapter) {
         if (adapter != null) {
             mRecyclerView.setAdapter(adapter);
+            if (mEmptyDataObserver == null) {
+                mEmptyDataObserver = new PullLoadMoreRecyclerView.AdapterDataObserver();
+            }
+            adapter.registerAdapterDataObserver(mEmptyDataObserver);
         }
+    }
+
+    public void showEmptyView() {
+
+        RecyclerView.Adapter<?> adapter = mRecyclerView.getAdapter();
+        if (adapter != null && mEmptyViewContainer.getChildCount() != 0) {
+            if (adapter.getItemCount() == 0) {
+                mFooterView.setVisibility(View.GONE);
+                mEmptyViewContainer.setVisibility(VISIBLE);
+            } else {
+                mEmptyViewContainer.setVisibility(GONE);
+            }
+        }
+
     }
 
     public void setPullRefreshEnable(boolean enable) {
@@ -156,6 +181,18 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     /**
+     * When view detached from window , unregister adapter data observer, avoid momery leak.
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        RecyclerView.Adapter<?> adapter = mRecyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.unregisterAdapterDataObserver(mEmptyDataObserver);
+        }
+    }
+
+    /**
      * Solve IndexOutOfBoundsException exception
      */
     public class onTouchRecyclerView implements OnTouchListener {
@@ -166,6 +203,30 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             } else {
                 return false;
             }
+        }
+    }
+
+    /**
+     * This Observer receives adapter data change.
+     * When adapter's item count greater than 0 and empty view has been set,then show the empty view.
+     * when adapter's item count is 0 ,then empty view hide.
+     */
+    private class AdapterDataObserver extends android.support.v7.widget.RecyclerView.AdapterDataObserver {
+        @Override
+        public void onChanged() {
+            showEmptyView();
+        }
+
+        @Override
+        public void onItemRangeInserted(int positionStart, int itemCount) {
+            super.onItemRangeInserted(positionStart, itemCount);
+            showEmptyView();
+        }
+
+        @Override
+        public void onItemRangeRemoved(int positionStart, int itemCount) {
+            super.onItemRangeRemoved(positionStart, itemCount);
+            showEmptyView();
         }
     }
 
@@ -183,6 +244,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void setFooterViewText(int resid) {
         loadMoreText.setText(resid);
+    }
+
+    public void setEmptyView(View emptyView){
+        mEmptyViewContainer.removeAllViews();
+        mEmptyViewContainer.addView(emptyView);
     }
 
     public void refresh() {

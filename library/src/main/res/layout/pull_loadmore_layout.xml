@@ -20,6 +20,10 @@
             android:id="@+id/footerView"
             layout="@layout/footer_layout" />
 
+        <include
+            android:id="@+id/emptyView"
+            layout="@layout/empty_layout"/>
+
 
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

@@ -16,6 +16,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private FirstFragment firstFragment;
+    private SecondFragment secondFragment;
+    private ThirdFragment thirdFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,24 +68,24 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
 
-        Fragment newfragment = new FristFragment();
+        firstFragment = new FirstFragment();
         Bundle data = new Bundle();
         data.putInt("id", 0);
-        newfragment.setArguments(data);
-        adapter.addFrag(newfragment, "Frist");
+        firstFragment.setArguments(data);
+        adapter.addFrag(firstFragment, "Frist");
 
-        newfragment = new SecondFragment();
+        secondFragment = new SecondFragment();
         data = new Bundle();
         data.putInt("id", 1);
-        newfragment.setArguments(data);
-        adapter.addFrag(newfragment, "Second");
+        secondFragment.setArguments(data);
+        adapter.addFrag(secondFragment, "Second");
 
 
-        newfragment = new ThirdFragment();
+        thirdFragment = new ThirdFragment();
         data = new Bundle();
         data.putInt("id", 2);
-        newfragment.setArguments(data);
-        adapter.addFrag(newfragment, "Third");
+        thirdFragment.setArguments(data);
+        adapter.addFrag(thirdFragment, "Third");
 
         viewPager.setAdapter(adapter);
 
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        firstFragment.clearData();
         return true;
     }
 }
