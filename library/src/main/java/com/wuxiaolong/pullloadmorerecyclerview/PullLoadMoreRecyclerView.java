@@ -1,5 +1,7 @@
 package com.wuxiaolong.pullloadmorerecyclerview;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +23,7 @@ import android.widget.TextView;
  * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
  * weibo:http://weibo.com/u/2175011601
  */
+@SuppressWarnings("unused")
 public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -65,6 +69,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mEmptyViewContainer = (FrameLayout) view.findViewById(R.id.emptyView);
 
         loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
+
         mFooterView.setVisibility(View.GONE);
         mEmptyViewContainer.setVisibility(View.GONE);
 
@@ -198,11 +203,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     public class onTouchRecyclerView implements OnTouchListener {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
-            if (isRefresh || isLoadMore) {
-                return true;
-            } else {
-                return false;
-            }
+            return isRefresh || isLoadMore;
         }
     }
 
@@ -259,7 +260,12 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
-            mFooterView.setVisibility(View.VISIBLE);
+            mFooterView.animate().translationY(0).setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mFooterView.setVisibility(View.VISIBLE);
+                }
+            }).start();
             invalidate();
             mPullLoadMoreListener.onLoadMore();
 
@@ -269,10 +275,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void setPullLoadMoreCompleted() {
         isRefresh = false;
-        mSwipeRefreshLayout.setRefreshing(false);
+        setRefreshing(false);
 
         isLoadMore = false;
-        mFooterView.setVisibility(View.GONE);
+        mFooterView.animate().translationY(mFooterView.getHeight()).setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).start();
 
     }
 
