@@ -43,7 +43,7 @@ public class FirstFragment extends Fragment {
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view,null));
+        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));//setEmptyView
     }
 
     private void getData() {
@@ -60,11 +60,11 @@ public class FirstFragment extends Fragment {
                 });
 
             }
-        }, 2000);
+        }, 1000);
 
     }
 
-    public void clearData(){
+    public void clearData() {
         mRecyclerViewAdapter.getDataList().clear();
         mRecyclerViewAdapter.notifyDataSetChanged();
     }

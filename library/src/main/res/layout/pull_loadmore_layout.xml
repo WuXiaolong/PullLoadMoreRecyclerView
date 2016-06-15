@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="ResourceName">
+    android:layout_height="match_parent">
 
 
     <FrameLayout
@@ -18,15 +16,15 @@
             android:layout_height="match_parent" />
 
         <include
-            android:layout_gravity="bottom"
+            android:id="@+id/footerView"
+            layout="@layout/footer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/footerView"
-            layout="@layout/footer_layout" />
+            android:layout_gravity="bottom" />
 
         <include
             android:id="@+id/emptyView"
-            layout="@layout/empty_layout"/>
+            layout="@layout/empty_layout" />
 
 
     </FrameLayout>

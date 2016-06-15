@@ -6,12 +6,12 @@ apply plugin: 'com.jfrog.bintray'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-    resourcePrefix "PullLoadMoreRecyclerView"	//这个随便填
+    resourcePrefix "PullLoadMoreRecyclerView"    //这个随便填
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 105
-        versionName "1.0.5"
+        versionCode 106
+        versionName "1.0.6"
     }
     buildTypes {
         release {
@@ -23,31 +23,19 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
 
 }
+//检查代码的正确性，输入下面的命令：
+//gradlew install
 
-//添加
-//apply plugin: 'com.novoda.bintray-release'
-//publish {
-//    //bintray.com用户名
-//    userOrg = 'wuxiaolong'
-//    //jcenter上的路径
-//    groupId = 'com.wuxiaolong.pullloadmorerecyclerview'
-//    //项目名称
-//    artifactId = 'library'
-//    //版本号
-//    publishVersion = '1.0.5'
-//    //描述，不重要
-//    desc = '实现RecyclerView下拉刷新和上拉加载更多以及RecyclerView线性、网格、瀑布流效果演示'
-//    //网站，不重要
-//    website = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'
-//
-//}
+//上传编译的文件到bintray，使用如下的命令：
+//gradlew bintrayUpload
+
 
 // 这个version是区分library版本的，因此当我们需要更新library时记得修改这个version, 这个version影响后面的引用
-version = "1.0.5"
+version = "1.0.6"
 def siteUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'      // 项目的主页
 def gitUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView.git'   // Git仓库的url
 group = "com.wuxiaolong.pullloadmorerecyclerview"                           // Maven Group ID for the artifact，一般填你唯一的包名

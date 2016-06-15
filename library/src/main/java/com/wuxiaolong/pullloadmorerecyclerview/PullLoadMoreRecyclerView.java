@@ -22,6 +22,7 @@ import android.widget.TextView;
  * Created by WuXiaolong on 2015/7/2.
  * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
  * weibo:http://weibo.com/u/2175011601
+ * 微信公众号：AndroidProgrammer
  */
 @SuppressWarnings("unused")
 public class PullLoadMoreRecyclerView extends LinearLayout {
@@ -247,7 +248,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         loadMoreText.setText(resid);
     }
 
-    public void setEmptyView(View emptyView){
+    public void setEmptyView(View emptyView) {
         mEmptyViewContainer.removeAllViews();
         mEmptyViewContainer.addView(emptyView);
     }
@@ -260,12 +261,17 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
-            mFooterView.animate().translationY(0).setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                    mFooterView.setVisibility(View.VISIBLE);
-                }
-            }).start();
+            mFooterView.animate()
+                    .translationY(0)
+                    .setDuration(300)
+                    .setInterpolator(new AccelerateDecelerateInterpolator())
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            mFooterView.setVisibility(View.VISIBLE);
+                        }
+                    })
+                    .start();
             invalidate();
             mPullLoadMoreListener.onLoadMore();
 
@@ -278,7 +284,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         setRefreshing(false);
 
         isLoadMore = false;
-        mFooterView.animate().translationY(mFooterView.getHeight()).setDuration(300).setInterpolator(new AccelerateDecelerateInterpolator()).start();
+        mFooterView.animate()
+                .translationY(mFooterView.getHeight())
+                .setDuration(300)
+                .setInterpolator(new AccelerateDecelerateInterpolator())
+                .start();
 
     }
 

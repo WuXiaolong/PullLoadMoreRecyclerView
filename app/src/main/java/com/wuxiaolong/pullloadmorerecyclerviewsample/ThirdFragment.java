@@ -50,7 +50,7 @@ public class ThirdFragment extends Fragment {
         for (int i = start; i < 30 * mCount; i++) {
             map = new HashMap<>();
             map.put("text", "Third" + i);
-            map.put("height", (100 + 5 * i) + "");
+            map.put("height", (120 + 5 * i) + "");
             dataList.add(map);
         }
         return dataList;
@@ -66,7 +66,7 @@ public class ThirdFragment extends Fragment {
                 mRecyclerViewAdapter.notifyDataSetChanged();
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
-        }, 2000);
+        }, 1000);
     }
 
     class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
