@@ -35,15 +35,25 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
-        //mPullLoadMoreRecyclerView.setRefreshing(true);//设置下拉刷新是否可见
-        //mPullLoadMoreRecyclerView.setPullRefreshEnable(false);//设置是否下拉刷新
-        //mPullLoadMoreRecyclerView.setPushRefreshEnable(false);//设置是否上拉刷新
-        mPullLoadMoreRecyclerView.setFooterViewText("loading");//设置上拉刷新文字
+        //设置下拉刷新是否可见
+        //mPullLoadMoreRecyclerView.setRefreshing(true);
+        //设置是否可以下拉刷新
+        //mPullLoadMoreRecyclerView.setPullRefreshEnable(true);
+        //设置是否可以上拉刷新
+        //mPullLoadMoreRecyclerView.setPushRefreshEnable(false);
+        //显示下拉刷新
+        mPullLoadMoreRecyclerView.setRefreshing(true);
+        //设置上拉刷新文字
+        mPullLoadMoreRecyclerView.setFooterViewText("loading");
+        //设置上拉刷新文字颜色
+        mPullLoadMoreRecyclerView.setFooterViewTextColor(R.color.white);
+        //设置加载更多背景色
+        mPullLoadMoreRecyclerView.setFooterViewBackgroundColor(R.color.colorBackground);
         mPullLoadMoreRecyclerView.setLinearLayout();
-        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
-        mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
+
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
         mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));//setEmptyView
+        getData();
     }
 
     private void getData() {
@@ -53,8 +63,13 @@ public class FirstFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mRecyclerViewAdapter.getDataList().addAll(setList());
-                        mRecyclerViewAdapter.notifyDataSetChanged();
+                        if (mRecyclerViewAdapter == null) {
+                            mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
+                            mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
+                        } else {
+                            mRecyclerViewAdapter.getDataList().addAll(setList());
+                            mRecyclerViewAdapter.notifyDataSetChanged();
+                        }
                         mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                     }
                 });

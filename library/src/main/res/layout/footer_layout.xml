@@ -2,22 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:background="#cfff"
     android:orientation="horizontal">
 
-    <ProgressBar
-        android:id="@+id/loadMoreProgressBar"
-        style="@android:style/Widget.ProgressBar.Small"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/loadMoreLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp" />
+        android:background="#cfff"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/loadMoreText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:text="@string/load_more_text" />
+        <ProgressBar
+            android:id="@+id/loadMoreProgressBar"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:id="@+id/loadMoreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/load_more_text" />
+    </LinearLayout>
 </LinearLayout>

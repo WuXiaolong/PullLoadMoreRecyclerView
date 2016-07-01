@@ -3,6 +3,7 @@ package com.wuxiaolong.pullloadmorerecyclerview;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -23,6 +24,7 @@ import android.widget.TextView;
  * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
  * weibo:http://weibo.com/u/2175011601
  * 微信公众号：AndroidProgrammer
+ * 博客：http://wuxiaolong.me/
  */
 @SuppressWarnings("unused")
 public class PullLoadMoreRecyclerView extends LinearLayout {
@@ -38,6 +40,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private FrameLayout mEmptyViewContainer;
     private Context mContext;
     private TextView loadMoreText;
+    private LinearLayout loadMoreLayout;
     private PullLoadMoreRecyclerView.AdapterDataObserver mEmptyDataObserver;
 
     public PullLoadMoreRecyclerView(Context context) {
@@ -69,6 +72,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mFooterView = view.findViewById(R.id.footerView);
         mEmptyViewContainer = (FrameLayout) view.findViewById(R.id.emptyView);
 
+        loadMoreLayout = (LinearLayout) view.findViewById(R.id.loadMoreLayout);
         loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
 
         mFooterView.setVisibility(View.GONE);
@@ -240,12 +244,24 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         this.pushRefreshEnable = pushRefreshEnable;
     }
 
+    public LinearLayout getFooterViewLayout() {
+        return loadMoreLayout;
+    }
+
+    public void setFooterViewBackgroundColor(int color) {
+        loadMoreLayout.setBackgroundColor(ContextCompat.getColor(mContext, color));
+    }
+
     public void setFooterViewText(CharSequence text) {
         loadMoreText.setText(text);
     }
 
     public void setFooterViewText(int resid) {
         loadMoreText.setText(resid);
+    }
+
+    public void setFooterViewTextColor(int color) {
+        loadMoreText.setTextColor(ContextCompat.getColor(mContext, color));
     }
 
     public void setEmptyView(View emptyView) {
