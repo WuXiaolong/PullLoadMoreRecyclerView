@@ -17,6 +17,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
+ * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
+ * weibo:http://weibo.com/u/2175011601
+ * 微信公众号：AndroidProgrammer
+ * 博客：http://wuxiaolong.me/
  */
 public class FirstFragment extends Fragment {
 
@@ -52,8 +56,10 @@ public class FirstFragment extends Fragment {
         mPullLoadMoreRecyclerView.setLinearLayout();
 
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));//setEmptyView
+        //setEmptyView
+        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));
         getData();
+
     }
 
     private void getData() {
