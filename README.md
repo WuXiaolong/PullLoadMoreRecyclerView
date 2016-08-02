@@ -151,4 +151,4 @@ Android技术交流群
 [吴小龙同學](http://weibo.com/u/2175011601)
 
 # License
-Apache 2.0
+[Apache-2.0](https://opensource.org/licenses/apache2.0.php)
