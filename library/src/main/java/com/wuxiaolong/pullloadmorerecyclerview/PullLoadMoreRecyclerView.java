@@ -168,8 +168,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             adapter.registerAdapterDataObserver(mEmptyDataObserver);
         }
     }
-    
-   @Override
+
+    @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (mEmptyDataObserver != null) {
@@ -179,7 +179,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             }
         }
     }
-    
+
     /**
      * When view detached from window , unregister adapter data observer, avoid momery leak.
      */
