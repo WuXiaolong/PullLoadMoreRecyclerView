@@ -168,7 +168,18 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
             adapter.registerAdapterDataObserver(mEmptyDataObserver);
         }
     }
-
+    
+   @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (mEmptyDataObserver != null) {
+            RecyclerView.Adapter<?> adapter = mRecyclerView.getAdapter();
+            if (adapter != null) {
+                adapter.registerAdapterDataObserver(mEmptyDataObserver);
+            }
+        }
+    }
+    
     /**
      * When view detached from window , unregister adapter data observer, avoid momery leak.
      */
