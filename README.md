@@ -142,6 +142,7 @@ Android技术交流群
 
 # 微信公众号
 欢迎微信扫一扫关注：不止于技术分享，每天进步一点点。
+
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
 
 # 个人博客
