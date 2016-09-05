@@ -8,7 +8,7 @@
 ## build.gradle文件
 ```java
 dependencies {
-  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.0.9'
+  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.0'
 }
 ```
 

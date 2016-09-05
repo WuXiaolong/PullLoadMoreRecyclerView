@@ -23,8 +23,8 @@ import android.widget.TextView;
  * Created by WuXiaolong on 2015/7/2.
  * github:https://github.com/WuXiaolong/PullLoadMoreRecyclerView
  * weibo:http://weibo.com/u/2175011601
- * 微信公众号：AndroidProgrammer
- * 博客：http://wuxiaolong.me/
+ * 微信公众号：吴小龙同学
+ * 个人博客：http://wuxiaolong.me/
  */
 @SuppressWarnings("unused")
 public class PullLoadMoreRecyclerView extends LinearLayout {

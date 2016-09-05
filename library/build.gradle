@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 110
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -23,8 +23,8 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:recyclerview-v7:24.2.0'
 
 }
 //检查代码的正确性，输入下面的命令：
@@ -37,7 +37,7 @@ dependencies {
 // 这个version是区分library版本的，
 // 因此当我们需要更新library时记得修改这个version,
 // 这个version影响后面的引用
-version = "1.0.9"
+version = "1.1.0"
 
 def siteUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView'      // 项目的主页
 def gitUrl = 'https://github.com/WuXiaolong/PullLoadMoreRecyclerView.git'   // Git仓库的url

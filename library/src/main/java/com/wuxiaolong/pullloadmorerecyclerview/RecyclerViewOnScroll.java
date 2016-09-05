@@ -60,13 +60,11 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         }
 
     }
+
     //To find the maximum value in the array
-
     private int findMax(int[] lastPositions) {
-
         int max = lastPositions[0];
         for (int value : lastPositions) {
-            //       int max    = Math.max(lastPositions,value);
             if (value > max) {
                 max = value;
             }
