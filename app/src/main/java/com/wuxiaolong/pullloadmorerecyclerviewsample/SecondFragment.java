@@ -32,17 +32,17 @@ public class SecondFragment extends Fragment {
         mPullLoadMoreRecyclerView = (PullLoadMoreRecyclerView) view.findViewById(R.id.pullLoadMoreRecyclerView);
         //mPullLoadMoreRecyclerView.setRefreshing(true);
         mPullLoadMoreRecyclerView.setGridLayout(2);
-        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity());
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
+        getData();
     }
 
     private void getData() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mRecyclerViewAdapter.getDataList().addAll(setList());
-                mRecyclerViewAdapter.notifyDataSetChanged();
+                mRecyclerViewAdapter.addAllData(setList());
                 mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
             }
         }, 1000);
@@ -74,9 +74,7 @@ public class SecondFragment extends Fragment {
     }
 
     private void setRefresh() {
-
-        mRecyclerViewAdapter.getDataList().clear();
-
+        mRecyclerViewAdapter.clearData();
         mCount = 1;
 
     }

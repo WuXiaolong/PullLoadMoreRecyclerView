@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,18 +17,19 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private Context mContext;
-    private List<String> dataList;
+    private List<String> dataList = new ArrayList<>();
 
-    public List<String> getDataList() {
-        return dataList;
+
+    public void addAllData(List<String> dataList) {
+        this.dataList.addAll(dataList);
+        notifyDataSetChanged();
     }
 
-    public void removeAllDataList() {
-        this.dataList.removeAll(dataList);
+    public void clearData() {
+        this.dataList.clear();
     }
 
-    public RecyclerViewAdapter(Context context, List<String> dataList) {
-        this.dataList = dataList;
+    public RecyclerViewAdapter(Context context) {
         mContext = context;
     }
 

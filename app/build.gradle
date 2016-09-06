@@ -8,8 +8,8 @@ android {
         applicationId "com.wuxiaolong.pullloadmorerecyclerview"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 109
-        versionName "1.0.9"
+        versionCode 111
+        versionName "1.1.1"
     }
     buildTypes {
         release {
@@ -24,5 +24,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.0'
     compile 'com.android.support:design:24.2.0'
 //    compile project(':library')
-    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.0'
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
 }

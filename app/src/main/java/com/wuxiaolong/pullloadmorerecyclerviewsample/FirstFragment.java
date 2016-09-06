@@ -23,7 +23,7 @@ import java.util.List;
  * 微信公众号：AndroidProgrammer
  * 博客：http://wuxiaolong.me/
  */
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements PullLoadMoreRecyclerView.PullLoadMoreListener {
 
     private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
     private int mCount = 1;
@@ -43,7 +43,7 @@ public class FirstFragment extends Fragment {
         //获取mRecyclerView对象
         mRecyclerView = mPullLoadMoreRecyclerView.getRecyclerView();
         //代码设置scrollbar无效？未解决！
-        mRecyclerView.setVerticalScrollBarEnabled (true);
+        mRecyclerView.setVerticalScrollBarEnabled(true);
         //设置下拉刷新是否可见
         //mPullLoadMoreRecyclerView.setRefreshing(true);
         //设置是否可以下拉刷新
@@ -60,9 +60,11 @@ public class FirstFragment extends Fragment {
         mPullLoadMoreRecyclerView.setFooterViewBackgroundColor(R.color.colorBackground);
         mPullLoadMoreRecyclerView.setLinearLayout();
 
-        mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreListener());
-        //setEmptyView
+        mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(this);
+        //setEmptyView，演示空数据，可以提示“数据加载中”
         mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));
+        mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity());
+        mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         getData();
 
     }
@@ -74,13 +76,7 @@ public class FirstFragment extends Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (mRecyclerViewAdapter == null) {
-                            mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity(), setList());
-                            mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
-                        } else {
-                            mRecyclerViewAdapter.getDataList().addAll(setList());
-                            mRecyclerViewAdapter.notifyDataSetChanged();
-                        }
+                        mRecyclerViewAdapter.addAllData(setList());
                         mPullLoadMoreRecyclerView.setPullLoadMoreCompleted();
                     }
                 });
@@ -91,7 +87,7 @@ public class FirstFragment extends Fragment {
     }
 
     public void clearData() {
-        mRecyclerViewAdapter.getDataList().clear();
+        mRecyclerViewAdapter.clearData();
         mRecyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -106,24 +102,22 @@ public class FirstFragment extends Fragment {
 
     }
 
+    @Override
+    public void onRefresh() {
+        Log.e("wxl", "onRefresh");
+        setRefresh();
+        getData();
+    }
 
-    class PullLoadMoreListener implements PullLoadMoreRecyclerView.PullLoadMoreListener {
-        @Override
-        public void onRefresh() {
-            setRefresh();
-            getData();
-        }
-
-        @Override
-        public void onLoadMore() {
-            Log.e("wxl", "onLoadMore");
-            mCount = mCount + 1;
-            getData();
-        }
+    @Override
+    public void onLoadMore() {
+        Log.e("wxl", "onLoadMore");
+        mCount = mCount + 1;
+        getData();
     }
 
     private void setRefresh() {
-        mRecyclerViewAdapter.removeAllDataList();
+        mRecyclerViewAdapter.clearData();
         mCount = 1;
     }
 }
