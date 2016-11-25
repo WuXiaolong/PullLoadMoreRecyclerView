@@ -55,14 +55,12 @@ public class FirstFragment extends Fragment implements PullLoadMoreRecyclerView.
         //设置上拉刷新文字
         mPullLoadMoreRecyclerView.setFooterViewText("loading");
         //设置上拉刷新文字颜色
-        mPullLoadMoreRecyclerView.setFooterViewTextColor(R.color.white);
+        //mPullLoadMoreRecyclerView.setFooterViewTextColor(R.color.white);
         //设置加载更多背景色
-        mPullLoadMoreRecyclerView.setFooterViewBackgroundColor(R.color.colorBackground);
+        //mPullLoadMoreRecyclerView.setFooterViewBackgroundColor(R.color.colorBackground);
         mPullLoadMoreRecyclerView.setLinearLayout();
 
         mPullLoadMoreRecyclerView.setOnPullLoadMoreListener(this);
-        //setEmptyView，演示空数据，可以提示“数据加载中”
-        mPullLoadMoreRecyclerView.setEmptyView(LayoutInflater.from(getContext()).inflate(R.layout.empty_view, null));
         mRecyclerViewAdapter = new RecyclerViewAdapter(getActivity());
         mPullLoadMoreRecyclerView.setAdapter(mRecyclerViewAdapter);
         getData();
