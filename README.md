@@ -8,17 +8,16 @@
 ## build.gradle文件
 ```java
 dependencies {
-  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
+  compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
 }
 ```
 
 ## xml引用
-```js
+```xml
  <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/pullLoadMoreRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_height="match_parent" />
 ```
 
 ## 设置线性布局
@@ -127,12 +126,12 @@ mPullLoadMoreRecyclerView.setFooterViewBackgroundColor(R.color.colorBackground);
 
 ### 设置下拉刷新颜色
 ```java
- mPullLoadMoreRecyclerView.setColorSchemeResources(android.R.color.holo_red_dark,android.R.color.holo_blue_dark);
+mPullLoadMoreRecyclerView.setColorSchemeResources(android.R.color.holo_red_dark,android.R.color.holo_blue_dark);
 ```
 
 ### 快速Top
 ```java
-  mPullLoadMoreRecyclerView.scrollToTop();
+mPullLoadMoreRecyclerView.scrollToTop();
 ```
 
 # 更多交流
@@ -140,8 +139,8 @@ Android技术交流群
 ③群：370527306<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a992ba077da4c8325cbfef1c9e81f0443ffb782a0f2135c1a8f7326baac58ac"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="剩者为王③群" title="剩者为王③群"></a>
 
 
-# 微信公众号
-欢迎微信扫一扫关注：不止于技术分享，每天进步一点点。
+# 联系我
+我的微信公众号：吴小龙同学，欢迎关注交流。
 
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
 
