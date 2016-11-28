@@ -2,7 +2,7 @@
 
 # 效果预览
 
-![]http://7q5c2h.com1.z0.glb.clouddn.com/PullLoadMoreRecyclerView.gif)
+![](http://7q5c2h.com1.z0.glb.clouddn.com/PullLoadMoreRecyclerView.gif)
 
 # 使用方法
 
