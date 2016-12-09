@@ -134,15 +134,17 @@ mPullLoadMoreRecyclerView.setColorSchemeResources(android.R.color.holo_red_dark,
 mPullLoadMoreRecyclerView.scrollToTop();
 ```
 
-# 更多交流
-Android技术交流群
-③群：370527306<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=0a992ba077da4c8325cbfef1c9e81f0443ffb782a0f2135c1a8f7326baac58ac"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="剩者为王③群" title="剩者为王③群"></a>
-
-
 # 联系我
 我的微信公众号：吴小龙同学，欢迎关注交流。
 
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
+
+# 更多交流
+Android技术交流群
+④群 331553260<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=49d34fe949967c15001e702030f3f69e523c624771a8059319ab1e247cc4f723"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="剩者为王④群" title="剩者为王④群"></a>
+
+
+
 
 # 个人博客
 [http://wuxiaolong.me/](http://wuxiaolong.me/)
