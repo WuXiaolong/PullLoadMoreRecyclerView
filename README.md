@@ -135,16 +135,15 @@ mPullLoadMoreRecyclerView.scrollToTop();
 ```
 
 # 联系我
-* 我的微信公众号：吴小龙同学，欢迎关注交流。
+我的微信公众号：吴小龙同学，欢迎关注交流。
 
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
 
 
-* Android技术交流群
+# 更多交流
+Android技术交流群-剩者为王④群：331553260
 
-  剩者为王④群：331553260
-
-
+![](http://7q5c2h.com1.z0.glb.clouddn.com/qun4.png)
 
 
 # 个人博客
