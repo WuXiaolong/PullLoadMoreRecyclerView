@@ -139,7 +139,7 @@ mPullLoadMoreRecyclerView.scrollToTop();
 
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
 
-# 更多交流
+
 Android技术交流群
 
 ④群 331553260<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=49d34fe949967c15001e702030f3f69e523c624771a8059319ab1e247cc4f723"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="剩者为王④群" title="剩者为王④群"></a>
