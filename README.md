@@ -141,9 +141,9 @@ mPullLoadMoreRecyclerView.scrollToTop();
 
 
 # 更多交流
-Android技术交流群-剩者为王④群：331553260
+Android技术交流群-剩者为王⑤群：590967484
 
-![](http://7q5c2h.com1.z0.glb.clouddn.com/qun4.png)
+![](http://7q5c2h.com1.z0.glb.clouddn.com/qun5.png)
 
 
 # 个人博客
