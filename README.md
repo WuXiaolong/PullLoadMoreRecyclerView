@@ -140,10 +140,7 @@ mPullLoadMoreRecyclerView.scrollToTop();
 ![](http://7q5c2h.com1.z0.glb.clouddn.com/qrcode_wuxiaolong.jpg)
 
 # 个人博客
-[http://wuxiaolong.me/](http://wuxiaolong.me/)
-
-# 作者微博
-[吴小龙同學](http://weibo.com/u/2175011601)
+[https://wuxiaolong.github.io/](https://wuxiaolong.github.io/)
 
 # License
 [Apache-2.0](https://opensource.org/licenses/apache2.0.php)
